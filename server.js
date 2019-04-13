@@ -42,14 +42,15 @@ var server = http.createServer(function (request, response) {
         response.end()
     } else if (path === '/pay') {
         var amount = fs.readFileSync('./db', 'utf-8')
-        var newAmount = amount - 1
-        console.log(newAmount)
         if (Math.random() > 0.5) {
+            var newAmount = amount - 1
             console.log(newAmount)
             fs.writeFileSync('./db', newAmount)
-            response.setHeader('Content-Type', 'image/jpg')
+            response.setHeader('Content-Type', 'text/javascript')
             response.statusCode = 200
-            response.write(fs.readFileSync('./dog.jpg'))
+            response.write(`
+            amount.innerText -= 1
+            `)
         } else {
             response.statusCode = 400
             response.write('failed')
