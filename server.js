@@ -48,9 +48,7 @@ var server = http.createServer(function (request, response) {
             fs.writeFileSync('./db', newAmount)
             response.setHeader('Content-Type', 'text/javascript')
             response.statusCode = 200
-            response.write(`
-            amount.innerText -= 1
-            `)
+            response.write(`amount.innerText -= 1`)
         } else {
             response.statusCode = 400
             response.write('failed')
