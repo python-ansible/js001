@@ -11,30 +11,46 @@
 <body>
 <h5>您的账户余额是 <span id="amount">&&&amount&&&</span></h5>
 <button id="button">打钱</button>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
 <script>
+    // jQuery jsonp 为什么不支持 post 方法
+    // jsonp 实际上是动态创建 script, script 只支持 get 方法
     button.addEventListener('click', (e) => {
-        let script = document.createElement('script')
-        let functionName = 'wzl' + parseInt(Math.random() * 100000, 10)
-        // wzlxxxxxx
-        window[functionName] = function (result) {
-            if (result === 'success') {
-                amount.innerText -= 1
-            } else {
-
+        $.ajax({
+            url: "http://127.0.0.1:8001/pay",
+            dataType: "jsonp",
+            success: function (response) {
+                if(response === 'success'){
+                    amount.innerText -= 1
+                }
             }
-        }
-        script.src = 'http://127.0.0.1:8001/pay?callback=' + functionName
-        document.body.appendChild(script)
-        script.onload = function (e) {
-            e.currentTarget.remove()
-            delete window[functionName]
-        }
-        script.onerror = function (e) {
-            alert('failed')
-            e.currentTarget.remove()
-            delete window[functionName]
-        }
+        })
     })
+
+    // button.addEventListener('click', (e) => {
+    //     let script = document.createElement('script')
+    //     let functionName = 'wzl' + parseInt(Math.random() * 100000, 10)
+    //     // wzlxxxxxx
+    //     window[functionName] = function (result) {
+    //         if (result === 'success') {
+    //             amount.innerText -= 1
+    //         } else {
+
+    //         }
+    //     }
+    //     script.src = 'http://127.0.0.1:8001/pay?callback=' + functionName
+    //     document.body.appendChild(script)
+    //     script.onload = function (e) {
+    //         e.currentTarget.remove()
+    //         delete window[functionName]
+    //     }
+    //     script.onerror = function (e) {
+    //         alert('failed')
+    //         e.currentTarget.remove()
+    //         delete window[functionName]
+    //     }
+    // })
+
     // button.addEventListener('click', (e) => {
     //     let image = document.createElement('img')
     //     image.src = '/pay'
