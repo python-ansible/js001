@@ -12,14 +12,6 @@
 <h5>您的账户余额是 <span id="amount">&&&amount&&&</span></h5>
 <button id="button">打钱</button>
 <script>
-    window.payCallback = function (result) {
-        if (result === 'success') {
-            amount.innerText -= 1
-        } else {
-            alert('这是wzl写的前端代码')
-            alert(`我得到的结果是${result}`)
-        }
-    }
     button.addEventListener('click', (e) => {
         let script = document.createElement('script')
         let functionName = 'wzl' + parseInt(Math.random() * 100000, 10)
