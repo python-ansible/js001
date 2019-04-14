@@ -9,37 +9,41 @@
     <title>首页</title>
 </head>
 <body>
-    <h5>您的账户余额是 <span id="amount">&&&amount&&&</span></h5>
-    <button id="button">打钱</button>
-    <script>
-        window.payCallback = function(result){
+<h5>您的账户余额是 <span id="amount">&&&amount&&&</span></h5>
+<button id="button">打钱</button>
+<script>
+    window.payCallback = function (result) {
+        if (result === 'success') {
+            amount.innerText -= 1
+        } else {
             alert('这是wzl写的前端代码')
             alert(`我得到的结果是${result}`)
         }
-        button.addEventListener('click', (e) => {
-            let script = document.createElement('script')
-            // script.src = '/pay'
-            script.src = 'http://127.0.0.1:8001/pay?callbackName=payCallback'
-            document.body.appendChild(script)
-            script.onload = function (e) {
-                e.currentTarget.remove()
-            }
-            script.onerror = function (e) {
-                alert('failed')
-                e.currentTarget.remove()
-            }
-        })
-        // button.addEventListener('click', (e) => {
-        //     let image = document.createElement('img')
-        //     image.src = '/pay'
-        //     image.onload = function () {
-        //         alert('打钱成功')
-        //         amount.innerText -= 1
-        //     }
-        //     image.onerror = function () {
-        //         alert('打钱失败')
-        //     }
-        // })
-    </script>
+    }
+    button.addEventListener('click', (e) => {
+        let script = document.createElement('script')
+        // script.src = '/pay'
+        script.src = 'http://127.0.0.1:8001/pay?callbackName=payCallback'
+        document.body.appendChild(script)
+        script.onload = function (e) {
+            e.currentTarget.remove()
+        }
+        script.onerror = function (e) {
+            alert('failed')
+            e.currentTarget.remove()
+        }
+    })
+    // button.addEventListener('click', (e) => {
+    //     let image = document.createElement('img')
+    //     image.src = '/pay'
+    //     image.onload = function () {
+    //         alert('打钱成功')
+    //         amount.innerText -= 1
+    //     }
+    //     image.onerror = function () {
+    //         alert('打钱失败')
+    //     }
+    // })
+</script>
 </body>
 </html>

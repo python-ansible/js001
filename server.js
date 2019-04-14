@@ -50,7 +50,6 @@ var server = http.createServer(function (request, response) {
             response.setHeader('Content-Type', 'text/javascript')
             response.statusCode = 200
             // response.write(`amount.innerText -= 1`)
-            debugger
             console.log('-----callbackName wzl-----')
             console.log(`${query.callbackName}`)
             response.write(`${query.callbackName}.call(undefined,'success')`)
