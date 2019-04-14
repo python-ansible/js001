@@ -12,9 +12,14 @@
     <h5>您的账户余额是 <span id="amount">&&&amount&&&</span></h5>
     <button id="button">打钱</button>
     <script>
+        window.payCallback = function(result){
+            alert('这是wzl写的前端代码')
+            alert(`我得到的结果是${result}`)
+        }
         button.addEventListener('click', (e) => {
             let script = document.createElement('script')
-            script.src = '/pay'
+            // script.src = '/pay'
+            script.src = 'http://127.0.0.1:8001/pay?callbackName=payCallback'
             document.body.appendChild(script)
             script.onload = function (e) {
                 e.currentTarget.remove()

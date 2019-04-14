@@ -8,11 +8,12 @@ if (!port) {
         '比如：node server.js 8888')
     process.exit(1)
 }
+// var port = process.env.PORT || 8888;
 
 var server = http.createServer(function (request, response) {
     var parsedUrl = url.parse(request.url, true)
-    var path = request.url
-    var query = ''
+    var path = parsedUrl.pathname
+    var query = parsedUrl.query
     if (path.indexOf('?') >= 0) {
         query = path.substring(path.indexOf('?'))
     }
@@ -42,13 +43,17 @@ var server = http.createServer(function (request, response) {
         response.end()
     } else if (path === '/pay') {
         var amount = fs.readFileSync('./db', 'utf-8')
-        if (Math.random() > 0.5) {
+        if (Math.random() > 0) {
             var newAmount = amount - 1
             console.log(newAmount)
             fs.writeFileSync('./db', newAmount)
             response.setHeader('Content-Type', 'text/javascript')
             response.statusCode = 200
-            response.write(`amount.innerText -= 1`)
+            // response.write(`amount.innerText -= 1`)
+            debugger
+            console.log('-----callbackName wzl-----')
+            console.log(`${query.callbackName}`)
+            response.write(`${query.callbackName}.call(undefined,'success')`)
         } else {
             response.statusCode = 400
             response.write('failed')
